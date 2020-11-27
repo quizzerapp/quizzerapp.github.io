@@ -1,0 +1,103 @@
+<!--
+-->
+<!doctype html>
+<html>
+  <head>
+    <title>Quiz builder</title>
+    <style>
+      #quizBuilderBoard {
+        border: solid black 1px;
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        margin-top: 2%;
+        margin-left: 2%;
+        border-radius: 2%;
+      }
+      #questionsList {
+        overflow: auto;
+        white-space: nowrap;
+        height: 70%;
+        border: solid black 1px;
+      }
+      button {
+        border: solid black 1px;
+        background-color: #ffffff
+      }
+      .question {
+        border: solid black 1px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='quizBuilderBoard'></div>
+    <script>
+      function init(){
+        window.testData = {questions:0,question:[]};
+        var board = document.getElementById('quizBuilderBoard');
+        board.innerHTML = '<h1>Quiz builder</h1><div id="questionsList"><button onclick="addQuestion();">Add question</button></div><button onclick="saveQuiz();">Save quiz</button><a id="link" href="" target="_blank"><button>Play quiz</button></a>';
+      }
+      function addQuestion(){
+        document.getElementById('link').href = 'quiz_v1.html?'+btoa(JSON.stringify(window.testData));
+        list = document.getElementById('questionsList');
+        window.testData.questions++;
+        window.testData.question.push({name: 'name',answer:['set answer','set answer','set answer','set answer','set answer','set answer'],correctAnswer:undefined});
+        list.innerHTML = '<button onclick="addQuestion();">Add question</button>';
+        for(var loop=0;loop<=window.testData.questions-1;loop++){
+          list.innerHTML = list.innerHTML+'<div id="'+eval(loop+1)+'" class="question" onclick="editQuestion(this.id);">Question '+eval(loop+1)+'</div>';
+        }
+      }
+      function editQuestion(id){
+        window.currentQuestionEdit = eval(id);
+        var popup = document.createElement('div');
+        popup.style.backgroundColor = 'white';
+        popup.style.border = 'solid black 1px';
+        popup.style.position = 'fixed';
+        popup.style.width = '50%';
+        popup.style.height = '50%';
+        popup.style.textAlign = 'center';
+        popup.id = 'popup';
+        document.body.appendChild(popup);
+        popup.innerHTML = '<h2>Edit question '+id+'</h2><br>Question name: <input id="name" placeholder="name"></input><br>Answer 1: <input id="answer1" placeholder="answer"></input><br>Answer 2: <input id="answer2" placeholder="answer"></input><br>Answer 3: <input id="answer3" placeholder="answer"></input><br>Answer 4: <input id="answer4" placeholder="answer"></input><br>Answer 5: <input id="answer5" placeholder="answer"></input><br>Answer 6: <input id="answer6" placeholder="answer"></input><br>Correct answer number: <input id="correctAnswer" placeholder="answer number"></input><br><button onclick="saveEdits();">Save</button>';
+      }
+      function saveEdits(){
+        name = document.getElementById('name').value;
+        answer1 = document.getElementById('answer1').value;
+        answer2 = document.getElementById('answer2').value;
+        answer3 = document.getElementById('answer3').value;
+        answer4 = document.getElementById('answer4').value;
+        answer5 = document.getElementById('answer5').value;
+        answer6 = document.getElementById('answer6').value;
+        correctAnswer = eval(document.getElementById('correctAnswer').value); 
+        window.testData.question[window.currentQuestionEdit-1].name = name;
+        window.testData.question[window.currentQuestionEdit-1].answer[0] = answer1;
+        window.testData.question[window.currentQuestionEdit-1].answer[1] = answer2;
+        window.testData.question[window.currentQuestionEdit-1].answer[2] = answer3;
+        window.testData.question[window.currentQuestionEdit-1].answer[3] = answer4;
+        window.testData.question[window.currentQuestionEdit-1].answer[4] = answer5;
+        window.testData.question[window.currentQuestionEdit-1].answer[5] = answer6;
+        window.testData.question[window.currentQuestionEdit-1].correctAnswer = correctAnswer;
+        document.getElementById('popup').outerHTML = '';
+        document.getElementById('link').href = 'quiz_v1.html?'+btoa(JSON.stringify(window.testData));
+      }
+      function saveQuiz(){
+        var popup = document.createElement('div');
+        popup.style.backgroundColor = 'white';
+        popup.style.border = 'solid black 1px';
+        popup.style.position = 'fixed';
+        popup.style.width = '50%';
+        popup.style.height = '50%';
+        popup.style.textAlign = 'center';
+        popup.id = 'savepopup';
+        document.body.appendChild(popup);
+        code = btoa(JSON.stringify(window.testData));
+        popup.innerHTML = '<h2>Copy this quiz code!</h2><br><input id="copy"></input><br><button onclick="document.getElementById(`savepopup`).outerHTML = ``;">Ok</button><button onclick="var text = document.getElementById(`copy`); text.select(); text.setSelectionRange(0,99999); document.execCommand(`copy`);">Copy</button>';
+        document.getElementById('copy').value = code;
+      }
+      onload = function(){
+          init();
+      }
+    </script>
+  </body>
+</html>

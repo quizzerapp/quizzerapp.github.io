@@ -38,11 +38,6 @@
       border: solid black 1px;
       border-radius: 2%;
     }
-    #_ {
-      /*position: fixed;*/ 
-      top: 90%;
-      left: 33%;
-    }
   </style>
 </head>
 <body>
@@ -70,10 +65,10 @@
         <br>
         Share your quizes with other people!
         <br>
-        <img src='2.png'></img>
+        <img onmouseover='this.src = "anim2.gif";' onmouseleave='this.src = "2.png";' src='2.png'></img>
         <br>
       </p>
-      <a id="_" href='select' onmouseover="this.style.fontSize = '110%'; onmouseleave="this.style.fontSize = 'inherit';"><button>Start playing and building quizzes!</button></a>
+      <a href='select><button onmouseover="this.style.backgroundColor = 'lightGray';" onmouseleave="this.style.fontSize = 'white';">Start playing and building quizzes!</button></a>
       <br>
       <br>
       <a href="info">❓ Help</a>

@@ -8,8 +8,8 @@
     border-radius: 2%;
   }
 </style>
-<img onclick="document.write('<style>  button {\
+<img onmouseover="this.style.width = '50%';" onmouseleave="this.style.width = '40%';" onclick="document.write('<style>  button {\
     border: solid black 1px;\
     background-color: #ffffff\
   }</style>Enter quiz code: <input id=quizcode></input><button id=button>Play quiz</button>'); document.getElementById(`button`).onclick = function(){location.href = 'quiz_v1.html?'+document.getElementById('quizcode').value}" src="playquiz.png"></img>
-<a href="quizBuilder_v1"><img src="makequiz.png"></img></a>
+<a href="quizBuilder_v1"><img onmouseover="this.style.width = '50%';" onmouseleave="this.style.width = '40%';" src="makequiz.png"></img></a>

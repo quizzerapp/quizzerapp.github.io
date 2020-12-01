@@ -1,2 +1,11 @@
-<img src="playquiz.png"></img>
-<img src="makequiz.png"></img>
+<style>
+  img {
+    cursor: pointer;
+  }
+  button {
+    border: solid black 1px;
+    background-color: #ffffff
+  }
+</style>
+<img onclick="document.write('Enter quiz code: <input id=`quizcode`></input><button onclick=`location.href = \"quiz_v1\"+document.getElementById(\"quizcode\").value`></button>')" src="playquiz.png"></img>
+<a href="quizbuilder_v1"><img src="makequiz.png"></img></a>

@@ -39,19 +39,19 @@
       border: none;
     }
 </style>
-<script>
-    function popup(){
-        return " "
-    }
-</script>
 <body onbeforeunload="return popop()">
     <div class='title'>
       <h1><a href="/"><img style="border-radius: 20%; width: 3%; cursor: pointer;" src='logo.png'></a></img>Quizzer</h1>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
     <a href="select"><button>Back</button></a>
-    <br>
-    <br>
-    <br>
-    <br>
     <iframe id="builder" src="quizBuilder_v1"></iframe>
+    <script>
+        function popup(){
+            return true;
+        }
+    </script>
 </body>

@@ -1,0 +1,126 @@
+<!--
+-->
+<!doctype html>
+<html>
+  <head>
+    <title>Quiz</title>
+    <style>
+      #quizBoard {
+        border: solid black 1px;
+        position: absolute;
+        width: 90%;
+        height: 80%;
+        margin-top: 2%;
+        margin-left: 2%;
+        border-radius: 2%;
+      }
+      .title {
+        text-align: center;
+        background-color: lightgray;
+        position: fixed;
+        width: 100%;
+        border: solid black 1px;
+        border-radius: 2%;
+        top: 0%;
+      }
+      button {
+        font-family: Sans-Serif;
+        font-size: 200%;
+        border: solid black 1px;
+        background-color: #ffffff
+      }
+      body {
+        text-align: left;
+        font-family: Sans-Serif;
+        font-size: 100%;
+      }
+      .title {
+        text-align: center;
+        background-color: lightgray;
+        position: fixed;
+        width: 100%;
+        border: solid black 1px;
+        border-radius: 2%;
+        top: 0%;
+      }
+      img {
+        width: 300px;
+        border: solid black 1px;
+        border-radius: 2%;
+      }
+      iframe {
+        width: 100%;
+        height: 80%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='title'>
+      <h1><a href="/"><img style="border-radius: 20%; width: 3%; cursor: pointer;" src='logo.png'></a></img>Quizzer</h1>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id='quizBoard'></div>
+    <script>
+    function init(){
+      var continueExec = 1;
+      try{
+        eval('window.testData='+atob(decodeURI(document.location.href.split('?')[1])));
+      } catch(error){
+        var board = document.getElementById('quizBoard');
+        board.innerHTML='<h1>Invalid test data!</h1>';
+        continueExec = 0;
+      }
+      if(continueExec == 1){
+        var questionAmount = window.testData.questions;
+        var questions = {};
+        window.currentQuestion = 0;
+        for(var loop1=1;loop1<=questionAmount;loop1++){
+          eval('questions.q'+loop1+'=window.testData.question'+loop1);
+        }
+        questions = [];
+        for(var _loop = 0; _loop <= window.testData.question[window.currentQuestion].answer.length-1; _loop++){
+          questions.push(window.testData.question[window.currentQuestion].answer[_loop]);
+        }
+        renderQuestion(window.testData.question[window.currentQuestion].name,questions,window.testData.question[window.currentQuestion].correctAnswer);
+      }
+    }
+    function renderQuestion(question,answers,correctAnswer){
+      window.currentQuestion += 1;
+      window.correctAnswer = correctAnswer;
+      var board = document.getElementById('quizBoard');
+      board.innerHTML='<h1>'+question+'</h1>';
+      for(var loop2=0;loop2<=answers.length-1;loop2++){
+        board.innerHTML = board.innerHTML+'<br><input type="checkbox" id="checkBox'+eval(loop2+1)+'" onclick="checkAnswer(this.id,window.currentQuestion)"></input>'+answers[loop2];
+      }
+    }
+    function checkAnswer(id,questionNumber){
+      eval('window.Question'+questionNumber+'correct = undefined');
+      if(id=='checkBox'+window.correctAnswer){
+        eval('window.Question'+questionNumber+'correct = true');
+      } else{
+        eval('window.Question'+questionNumber+'correct = false');
+      }
+      if(window.testData.questions != questionNumber){
+        renderQuestion(window.testData.question[window.currentQuestion].name,[window.testData.question[window.currentQuestion].answer[0],window.testData.question[window.currentQuestion].answer[1],window.testData.question[window.currentQuestion].answer[2],window.testData.question[window.currentQuestion].answer[3],window.testData.question[window.currentQuestion].answer[4],window.testData.question[window.currentQuestion].answer[5]],window.testData.question[window.currentQuestion].correctAnswer);
+      } else{
+          var board = document.getElementById('quizBoard');
+          board.innerHTML='<h1>Quiz results</h1>';
+          var correctAnswers = 0;
+          for(var loop3=0;loop3<=questionNumber-1;loop3++){
+            if(eval('window.Question'+eval(questionNumber-loop3)+'correct')==true){
+              correctAnswers++;
+            }
+          }
+          board.innerHTML = board.innerHTML+'<br>You got '+correctAnswers+'/'+window.testData.questions+'!<br><button onclick="location.reload()">Play again</button>';
+        }
+    }
+    onload = function(){
+      init();
+    }
+    </script>
+  </body>
+</html>
